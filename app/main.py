@@ -15,8 +15,9 @@ def create_app() -> FastAPI:
     def health() -> dict[str, str]:
         """Report API health."""
 
-        return {"status": "ok"}
-
+        return {"status": "ok",
+                "version": settings.version,
+                "environment": settings.app_env,}
     return app
 
 
