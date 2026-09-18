@@ -27,12 +27,33 @@ jobs:
         run: python -m pytest -v
 
   build:
-    needs: test                   
-    runs-on: ubuntu-latest        
+    needs: test
+    runs-on: ubuntu-latest
+
+    permissions:                    # NEW: this job needs write access to
+      contents: read                # GitHub Packages — by default the token
+      packages: write               # can only read the repo
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v4        
+        uses: actions/checkout@v4
 
-      - name: Build Docker image
-        run: docker build -t llm-cost-autopilot:ci .
+      - name: Log in to ghcr.io
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}          # your GitHub username, auto-filled
+          password: ${{ secrets.GITHUB_TOKEN }}  # auto-generated per run — you
+                                                 # create NO secret for this; it
+                                                 # exists automatically, scoped by
+                                                 # the permissions block above
+
+      - name: Build and push image
+        uses: docker/build-push-action@v6
+        with:
+          context: .                             # build from repo root
+          push: ${{ github.event_name == 'push' }}   # push ONLY on main pushes,
+                                                     # not on pull requests
+          tags: |
+            ghcr.io/medamine1920/llm-cost-autopilot:latest
+            ghcr.io/medamine1920/llm-cost-autopilot:${{ github.sha }}
