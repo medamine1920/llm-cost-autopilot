@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     """Runtime settings for the API."""
 
     app_name: str = "llm-cost-autopilot"
-    version:str = "0.1.0"
+    version:str = "0.2.0"
     app_env: str = "development"
     log_level: str = "INFO"
 
