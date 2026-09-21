@@ -16,7 +16,7 @@ from app.providers.groq import GroqProvider
 from app.providers.ollama import OllamaProvider
 
 
-GOLDEN_PATH = Path("data/golden_v1.json")
+GOLDEN_PATH = Path("data/golden_v2.json")
 def load_golden() -> list[dict]:
     return json.loads(GOLDEN_PATH.read_text(encoding="utf-8"))
 

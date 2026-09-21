@@ -15,24 +15,31 @@ def main() -> None:
         print("Usage: python -m scripts.tier_report <result files...>")
         return
 
-    counts = defaultdict(lambda: [0, 0])      # prompt_id -> [passed, graded]
+    counts = defaultdict(lambda: defaultdict(lambda: [0, 0]))   # prompt->model->[passed, graded]
 
     for path in files:
-        results = json.loads(Path(path).read_text(encoding="utf-8"))
-        for r in results:
-            if r["model"] == "ollama-local" and r.get("passed") is not None:
-                counts[r["prompt_id"]][1] += 1
-                if r["passed"]:
-                    counts[r["prompt_id"]][0] += 1
+        for r in json.loads(Path(path).read_text(encoding="utf-8")):
+            if r.get("passed") is not None:
+                c = counts[r["prompt_id"]][r["model"]]
+                c[1] += 1
+                c[0] += r["passed"]
 
-    if not counts:
-        print("No graded ollama-local rows found.")
-        return
+    def reliable(prompt_id: str, model: str) -> bool:
+        passed, graded = counts[prompt_id][model]
+        return graded > 0 and passed == graded
 
-    print(f"{'prompt':<26}{'passed':>8}   suggested tier")
-    for prompt_id, (passed, graded) in counts.items():
-        tier = "simple" if passed == graded else "moderate"
-        print(f"{prompt_id:<26}{f'{passed}/{graded}':>8}   {tier}")
+    print(f"{'prompt':<26}{'local':>7}{'20b':>7}{'120b':>7}   tier")
+    for prompt_id, by_model in counts.items():
+        cells = [f"{by_model[m][0]}/{by_model[m][1]}" for m in ("ollama-local", "groq-20b", "groq-120b")]
+        if reliable(prompt_id, "ollama-local"):
+            tier = "simple"
+        elif reliable(prompt_id, "groq-20b"):
+            tier = "moderate"
+        elif reliable(prompt_id, "groq-120b"):
+            tier = "complex"
+        else:
+            tier = "UNSOLVED"
+        print(f"{prompt_id:<26}{cells[0]:>7}{cells[1]:>7}{cells[2]:>7}   {tier}")
 
 
 if __name__ == "__main__":
