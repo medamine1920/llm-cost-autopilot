@@ -1,0 +1,114 @@
+[
+  {
+    "id": "reformat",
+    "text": "Convert to uppercase: the quick brown fox",
+    "tier_label": "simple",
+    "expected": "THE QUICK BROWN FOX",
+    "check": "exact"
+  },
+  {
+    "id": "extract",
+    "text": "Extract the email from: 'Contact John at john.doe@acme.com today.' Reply with only the email.",
+    "tier_label": "simple",
+    "expected": "john.doe@acme.com",
+    "check": "exact"
+  },
+  {
+    "id": "fact",
+    "text": "What is the capital of Japan? One word.",
+    "tier_label": "simple",
+    "expected": "tokyo",
+    "check": "exact"
+  },
+  {
+    "id": "classify",
+    "text": "Classify this support email as billing, technical, or account: 'I was charged twice this month.' Reply with one word.",
+    "tier_label": "simple",
+    "expected": "billing",
+    "check": "exact"
+  },
+  {
+    "id": "summarize",
+    "text": "Summarize in one sentence: Remote work increased productivity for some teams but hurt collaboration for others, leading many companies to adopt hybrid models.",
+    "tier_label": "simple",
+    "expected": "One sentence mentioning productivity gains, collaboration losses, and hybrid models.",
+    "check": "manual"
+  },
+  {
+    "id": "sentiment",
+    "text": "Is this review positive, negative, or mixed? 'Great battery, terrible camera.' One word.",
+    "tier_label": "moderate",
+    "expected": "mixed",
+    "check": "exact"
+  },
+  {
+    "id": "reasoning",
+    "text": "A bat and ball cost $1.10 total. The bat costs $1.00 more than the ball. How much is the ball? Explain briefly.",
+    "tier_label": "simple",
+    "expected": "0.05",
+    "check": "contains"
+  },
+  {
+    "id": "multistep",
+    "text": "If a train leaves at 3:40pm and the trip takes 2h 35m, then waits 20m, then travels 1h 10m more, when does it arrive?",
+    "tier_label": "simple",
+    "expected": "7:45",
+    "check": "contains"
+  },
+  {
+    "id": "compare",
+    "text": "Compare SQL and NoSQL databases in 3 bullet points focused on scaling tradeoffs.",
+    "tier_label": "simple",
+    "expected": "Three bullets covering vertical vs horizontal scaling and consistency/schema tradeoffs.",
+    "check": "manual"
+  },
+  {
+    "id": "creative",
+    "text": "Write a two-line slogan for an eco-friendly sneaker brand.",
+    "tier_label": "moderate",
+    "expected": "Exactly two lines, no preamble or commentary.",
+    "check": "manual"
+  },
+  {
+    "id": "math",
+    "text": "A store sells pens at 3 for $2.40 and notebooks at 4 for $7. Sam buys 7 pens and 6 notebooks and pays with a $20 bill. How much change?",
+    "tier_label": "simple",
+    "expected": "3.90",
+    "check": "contains"
+  },
+  {
+    "id": "strict_constraints",
+    "text": "Write exactly 3 sentences about coffee. Each sentence must start with the letter C and contain exactly 8 words.",
+    "tier_label": "moderate",
+    "expected": "Exactly 3 sentences, each starting with C, each exactly 8 words, no preamble.",
+    "check": "manual"
+  },
+{
+  "id": "logic",
+  "text": "Anna is older than Ben. Carl is younger than Ben. Dana is older than Anna. Who is second-youngest? Reply with only the name.",
+  "tier_label": "moderate",
+  "expected": "ben",
+  "check": "exact"
+},
+  {
+    "id": "long_context_extraction",
+    "text": "Invoice #4471\nItem: USB cable - $12.00\nItem: Monitor stand - $64.50\nItem: Keyboard - $89.99\nItem: Mouse pad - $8.00\nItem: Webcam - $54.00\nItem: HDMI adapter - $19.99\nItem: Desk lamp - $47.00\nItem: Headset - $120.00\n\nWhat is the total of only the items priced over $50? Reply with just the number.",
+    "tier_label": "moderate",
+    "expected": "328.49",
+    "check": "contains"
+  },
+  {
+    "id": "code",
+    "text": "Write a Python function that returns the second-largest unique number in a list, handling duplicates and lists with fewer than 2 unique values.",
+    "tier_label": "simple",
+    "expected": "Deduplicates, returns None or raises when fewer than 2 unique values, returns correct second-largest.",
+    "check": "manual"
+  },
+  {
+    "id": "instruction_precision",
+    "text": "Reply with valid JSON only, no other text, with keys name and age: 'Maria is 34 years old.'",
+    "tier_label": "simple",
+    "expected": "{\"name\": \"Maria\", \"age\": 34}",
+    "check": "json"
+  }
+]

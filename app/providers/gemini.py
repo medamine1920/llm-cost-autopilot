@@ -20,9 +20,9 @@ class GeminiProvider(Provider):
 
         latency_ms = int((time.perf_counter() - start) * 1000)
 
-        # TODO: pull these from `completion` — inspect its shape first
-        text = completion.candidates[0].content  # the generated text
-        input_tokens = completion.usage.prompt_tokens      # usage info
+        # TODO:
+        text = completion.candidates[0].content  
+        input_tokens = completion.usage.prompt_tokens      
         output_tokens = completion.usage.completion_tokens 
 
         return Response(

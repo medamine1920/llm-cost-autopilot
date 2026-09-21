@@ -15,15 +15,16 @@ class GroqProvider(Provider):
         start = time.perf_counter()
 
         completion = await self.client.chat.completions.create(
+            temperature=0,
             model=config.model_id,
             messages=[{"role": "user", "content": prompt}],
         )
 
         latency_ms = int((time.perf_counter() - start) * 1000)
 
-        # TODO: pull these from `completion` — inspect its shape first
-        text = completion.choices[0].message.content              # the generated text
-        input_tokens = completion.usage.prompt_tokens      # usage info
+        # TODO: 
+        text = completion.choices[0].message.content          
+        input_tokens = completion.usage.prompt_tokens     
         output_tokens = completion.usage.completion_tokens 
 
         return Response(

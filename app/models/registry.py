@@ -13,7 +13,7 @@ class QualityTier(str, Enum):
 @dataclass(frozen=True)
 class ModelConfig:
     provider: str            # "groq" | "gemini" | "ollama"
-    model_id: str            # exact API model string
+    model_id: str            
     cost_per_1m_input: float
     cost_per_1m_output: float
     avg_latency_ms: int
@@ -31,7 +31,7 @@ REGISTRY: dict[str, ModelConfig] = {
         model_id="llama3.2:3b",
         cost_per_1m_input=0.0,
         cost_per_1m_output=0.0,
-        avg_latency_ms=800,
+        avg_latency_ms=6500,
         quality_tier=QualityTier.LOW,
     ),
     "gemini-lite": ModelConfig(
@@ -47,7 +47,7 @@ REGISTRY: dict[str, ModelConfig] = {
         model_id="openai/gpt-oss-20b",
         cost_per_1m_input=0.075,
         cost_per_1m_output=0.30,
-        avg_latency_ms=200,
+        avg_latency_ms=600,
         quality_tier=QualityTier.MEDIUM,
     ),
     "groq-120b": ModelConfig(
@@ -55,7 +55,7 @@ REGISTRY: dict[str, ModelConfig] = {
         model_id="openai/gpt-oss-120b",
         cost_per_1m_input=0.15,
         cost_per_1m_output=0.60,
-        avg_latency_ms=350,
+        avg_latency_ms=600,
         quality_tier=QualityTier.MEDIUM,
     ),
     "gemini-pro": ModelConfig(
