@@ -12,6 +12,11 @@ class Settings(BaseSettings):
     version:str = "0.2.0"
     app_env: str = "development"
     log_level: str = "INFO"
+    
+    # Provider Credentials Keys
+    groq_api_key: str = "Groq API Key"
+    gemini_api_key: str = "Gemini API Key"
+    
 
     model_config = SettingsConfigDict(
         env_file=".env",
