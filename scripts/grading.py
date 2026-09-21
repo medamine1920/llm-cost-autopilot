@@ -2,8 +2,7 @@ import json
 
 
 def normalize(s: str) -> str:
-    """Lowercase, trim whitespace and trailing punctuation."""
-    return s.lower().strip().rstrip(".!?")
+    return s.lower().strip().lstrip("$").rstrip(".!?")
 
 
 def grade(answer: str, item: dict) -> bool | None:

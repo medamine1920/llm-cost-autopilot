@@ -16,6 +16,7 @@ class Settings(BaseSettings):
     # Provider Credentials Keys
     groq_api_key: str = "Groq API Key"
     gemini_api_key: str = "Gemini API Key"
+    ollama_base_url: str = "http://localhost:11434"
     
 
     model_config = SettingsConfigDict(

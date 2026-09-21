@@ -1,0 +1,926 @@
+[
+  {
+    "id": "reformat",
+    "text": "Convert to uppercase: the quick brown fox",
+    "tier_label": "simple",
+    "expected": "THE QUICK BROWN FOX",
+    "check": "exact"
+  },
+  {
+    "id": "extract",
+    "text": "Extract the email from: 'Contact John at john.doe@acme.com today.' Reply with only the email.",
+    "tier_label": "simple",
+    "expected": "john.doe@acme.com",
+    "check": "exact"
+  },
+  {
+    "id": "fact",
+    "text": "What is the capital of Japan? One word.",
+    "tier_label": "simple",
+    "expected": "tokyo",
+    "check": "exact"
+  },
+  {
+    "id": "classify",
+    "text": "Classify this support email as billing, technical, or account: 'I was charged twice this month.' Reply with one word.",
+    "tier_label": "simple",
+    "expected": "billing",
+    "check": "exact"
+  },
+  {
+    "id": "summarize",
+    "text": "Summarize in one sentence: Remote work increased productivity for some teams but hurt collaboration for others, leading many companies to adopt hybrid models.",
+    "tier_label": "simple",
+    "expected": "One sentence mentioning productivity gains, collaboration losses, and hybrid models.",
+    "check": "manual"
+  },
+  {
+    "id": "sentiment",
+    "text": "Is this review positive, negative, or mixed? 'Great battery, terrible camera.' One word.",
+    "tier_label": "moderate",
+    "expected": "mixed",
+    "check": "exact"
+  },
+  {
+    "id": "reasoning",
+    "text": "A bat and ball cost $1.10 total. The bat costs $1.00 more than the ball. How much is the ball? Explain briefly.",
+    "tier_label": "simple",
+    "expected": "0.05",
+    "check": "contains"
+  },
+  {
+    "id": "multistep",
+    "text": "If a train leaves at 3:40pm and the trip takes 2h 35m, then waits 20m, then travels 1h 10m more, when does it arrive?",
+    "tier_label": "moderate",
+    "expected": "7:45",
+    "check": "contains"
+  },
+  {
+    "id": "compare",
+    "text": "Compare SQL and NoSQL databases in 3 bullet points focused on scaling tradeoffs.",
+    "tier_label": "simple",
+    "expected": "Three bullets covering vertical vs horizontal scaling and consistency/schema tradeoffs.",
+    "check": "manual"
+  },
+  {
+    "id": "creative",
+    "text": "Write a two-line slogan for an eco-friendly sneaker brand.",
+    "tier_label": "moderate",
+    "expected": "Exactly two lines, no preamble or commentary.",
+    "check": "manual"
+  },
+  {
+    "id": "math",
+    "text": "A store sells pens at 3 for $2.40 and notebooks at 4 for $7. Sam buys 7 pens and 6 notebooks and pays with a $20 bill. How much change?",
+    "tier_label": "simple",
+    "expected": "3.90",
+    "check": "contains"
+  },
+  {
+    "id": "strict_constraints",
+    "text": "Write exactly 3 sentences about coffee. Each sentence must start with the letter C and contain exactly 8 words.",
+    "tier_label": "moderate",
+    "expected": "Exactly 3 sentences, each starting with C, each exactly 8 words, no preamble.",
+    "check": "manual"
+  },
+  {
+    "id": "logic",
+    "text": "Anna is older than Ben. Carl is younger than Ben. Dana is older than Anna. Who is second-youngest? Reply with only the name.",
+    "tier_label": "simple",
+    "expected": "ben",
+    "check": "exact"
+  },
+  {
+    "id": "long_context_extraction",
+    "text": "Invoice #4471\nItem: USB cable - $12.00\nItem: Monitor stand - $64.50\nItem: Keyboard - $89.99\nItem: Mouse pad - $8.00\nItem: Webcam - $54.00\nItem: HDMI adapter - $19.99\nItem: Desk lamp - $47.00\nItem: Headset - $120.00\n\nWhat is the total of only the items priced over $50? Reply with just the number.",
+    "tier_label": "moderate",
+    "expected": "328.49",
+    "check": "contains"
+  },
+  {
+    "id": "code",
+    "text": "Write a Python function that returns the second-largest unique number in a list, handling duplicates and lists with fewer than 2 unique values.",
+    "tier_label": "simple",
+    "expected": "Deduplicates, returns None or raises when fewer than 2 unique values, returns correct second-largest.",
+    "check": "manual"
+  },
+  {
+    "id": "instruction_precision",
+    "text": "Reply with valid JSON only, no other text, with keys name and age: 'Maria is 34 years old.'",
+    "tier_label": "simple",
+    "expected": "{\"name\": \"Maria\", \"age\": 34}",
+    "check": "json"
+  },
+  {
+    "id": "six_runner_logic",
+    "text": "Six runners A, B, C, D, E, F. D finished last. A finished immediately after E. C finished immediately after A. F finished after C. B finished after F. Who finished fourth? Reply with only the letter.",
+    "tier_label": "moderate",
+    "expected": "f",
+    "check": "exact"
+  },
+  {
+    "id": "stacked_discount",
+    "text": "A jacket costs $80. It gets 25% off, then an extra 10% off the discounted price, then 8% sales tax is added. What is the final price? Reply with only the number rounded to 2 decimals.",
+    "tier_label": "simple",
+    "expected": "58.32",
+    "check": "contains"
+  },
+  {
+    "id": "fuel_cost",
+    "text": "A car uses 6.5 liters per 100 km. Fuel costs $1.80 per liter. What does fuel cost for a 340 km trip? Reply with only the number rounded to 2 decimals.",
+    "tier_label": "moderate",
+    "expected": "39.78",
+    "check": "contains"
+  },
+  {
+    "id": "code_trace",
+    "text": "def average(nums):\n    total = 0\n    for i in range(1, len(nums)):\n        total += nums[i]\n    return total / len(nums)\n\nWhat does average([2, 4, 6]) return? Reply with only the number rounded to 2 decimals.",
+    "tier_label": "moderate",
+    "expected": "3.33",
+    "check": "contains"
+  },
+  {
+    "id": "date_chain",
+    "text": "Development ends 42 days after April 4. Testing ends 10 days after development ends. On what date does testing end? Reply with only the month and day, like 'June 3'.",
+    "tier_label": "moderate",
+    "expected": "may 26",
+    "check": "contains"
+  },
+  {
+    "id": "remainder_puzzle",
+    "text": "Find the smallest positive integer that leaves remainder 1 when divided by 2, 3, 4, 5, and 6, and is divisible by 7. Reply with only the number.",
+    "tier_label": "moderate",
+    "expected": "301",
+    "check": "exact"
+  },
+  {
+    "id": "letter_count",
+    "text": "How many times does the letter r appear in 'strawberry raspberry'? Reply with only the number.",
+    "tier_label": "moderate",
+    "expected": "6",
+    "check": "exact"
+  },
+  {
+    "id": "negation",
+    "text": "Statement: 'All managers attended the meeting, and some engineers did not.' Which option is NOT implied? (a) Some attendees were managers (b) Not every engineer attended (c) No engineer attended (d) Every manager was at the meeting. Reply with only the letter.",
+    "tier_label": "moderate",
+    "expected": "c",
+    "check": "exact"
+  },
+  {
+    "id": "add_0",
+    "text": "What is 51 + 29? Reply with only the number.",
+    "tier_label": "tbd",
+    "expected": "80",
+    "check": "exact"
+  },
+  {
+    "id": "add_1",
+    "text": "What is 60 + 93? Reply with only the number.",
+    "tier_label": "tbd",
+    "expected": "153",
+    "check": "exact"
+  },
+  {
+    "id": "add_2",
+    "text": "What is 16 + 19? Reply with only the number.",
+    "tier_label": "tbd",
+    "expected": "35",
+    "check": "exact"
+  },
+  {
+    "id": "add_3",
+    "text": "What is 78 + 22? Reply with only the number.",
+    "tier_label": "tbd",
+    "expected": "100",
+    "check": "exact"
+  },
+  {
+    "id": "add_4",
+    "text": "What is 56 + 84? Reply with only the number.",
+    "tier_label": "tbd",
+    "expected": "140",
+    "check": "exact"
+  },
+  {
+    "id": "add_5",
+    "text": "What is 17 + 74? Reply with only the number.",
+    "tier_label": "tbd",
+    "expected": "91",
+    "check": "exact"
+  },
+  {
+    "id": "add_6",
+    "text": "What is 37 + 14? Reply with only the number.",
+    "tier_label": "tbd",
+    "expected": "51",
+    "check": "exact"
+  },
+  {
+    "id": "add_7",
+    "text": "What is 21 + 65? Reply with only the number.",
+    "tier_label": "tbd",
+    "expected": "86",
+    "check": "exact"
+  },
+  {
+    "id": "upper_0",
+    "text": "Convert to uppercase: ship it on friday",
+    "tier_label": "tbd",
+    "expected": "SHIP IT ON FRIDAY",
+    "check": "exact"
+  },
+  {
+    "id": "upper_1",
+    "text": "Convert to uppercase: the quick brown fox",
+    "tier_label": "tbd",
+    "expected": "THE QUICK BROWN FOX",
+    "check": "exact"
+  },
+  {
+    "id": "upper_2",
+    "text": "Convert to uppercase: hello world from tunis",
+    "tier_label": "tbd",
+    "expected": "HELLO WORLD FROM TUNIS",
+    "check": "exact"
+  },
+  {
+    "id": "upper_3",
+    "text": "Convert to uppercase: the quick brown fox",
+    "tier_label": "tbd",
+    "expected": "THE QUICK BROWN FOX",
+    "check": "exact"
+  },
+  {
+    "id": "upper_4",
+    "text": "Convert to uppercase: keep calm and deploy",
+    "tier_label": "tbd",
+    "expected": "KEEP CALM AND DEPLOY",
+    "check": "exact"
+  },
+  {
+    "id": "upper_5",
+    "text": "Convert to uppercase: ship it on friday",
+    "tier_label": "tbd",
+    "expected": "SHIP IT ON FRIDAY",
+    "check": "exact"
+  },
+  {
+    "id": "upper_6",
+    "text": "Convert to uppercase: the quick brown fox",
+    "tier_label": "tbd",
+    "expected": "THE QUICK BROWN FOX",
+    "check": "exact"
+  },
+  {
+    "id": "upper_7",
+    "text": "Convert to uppercase: keep calm and deploy",
+    "tier_label": "tbd",
+    "expected": "KEEP CALM AND DEPLOY",
+    "check": "exact"
+  },
+  {
+    "id": "extract_0",
+    "text": "Extract the email from: 'Please reach Ben at ben29@mail.net before Friday.' Reply with only the email.",
+    "tier_label": "tbd",
+    "expected": "ben29@mail.net",
+    "check": "exact"
+  },
+  {
+    "id": "extract_1",
+    "text": "Extract the email from: 'Please reach Anna at anna74@mail.net before Friday.' Reply with only the email.",
+    "tier_label": "tbd",
+    "expected": "anna74@mail.net",
+    "check": "exact"
+  },
+  {
+    "id": "extract_2",
+    "text": "Extract the email from: 'Please reach Gus at gus7@acme.com before Friday.' Reply with only the email.",
+    "tier_label": "tbd",
+    "expected": "gus7@acme.com",
+    "check": "exact"
+  },
+  {
+    "id": "extract_3",
+    "text": "Extract the email from: 'Please reach Anna at anna72@acme.com before Friday.' Reply with only the email.",
+    "tier_label": "tbd",
+    "expected": "anna72@acme.com",
+    "check": "exact"
+  },
+  {
+    "id": "extract_4",
+    "text": "Extract the email from: 'Please reach Eli at eli54@acme.com before Friday.' Reply with only the email.",
+    "tier_label": "tbd",
+    "expected": "eli54@acme.com",
+    "check": "exact"
+  },
+  {
+    "id": "extract_5",
+    "text": "Extract the email from: 'Please reach Ben at ben74@shop.io before Friday.' Reply with only the email.",
+    "tier_label": "tbd",
+    "expected": "ben74@shop.io",
+    "check": "exact"
+  },
+  {
+    "id": "extract_6",
+    "text": "Extract the email from: 'Please reach Carl at carl14@mail.net before Friday.' Reply with only the email.",
+    "tier_label": "tbd",
+    "expected": "carl14@mail.net",
+    "check": "exact"
+  },
+  {
+    "id": "extract_7",
+    "text": "Extract the email from: 'Please reach Dana at dana48@acme.com before Friday.' Reply with only the email.",
+    "tier_label": "tbd",
+    "expected": "dana48@acme.com",
+    "check": "exact"
+  },
+  {
+    "id": "json_0",
+    "text": "Reply with valid JSON only, no other text, with keys name, age and city: 'Ben is 54 years old and lives in Paris.'",
+    "tier_label": "tbd",
+    "expected": "{\"name\": \"Ben\", \"age\": 54, \"city\": \"Paris\"}",
+    "check": "json"
+  },
+  {
+    "id": "json_1",
+    "text": "Reply with valid JSON only, no other text, with keys name, age and city: 'Dana is 49 years old and lives in Madrid.'",
+    "tier_label": "tbd",
+    "expected": "{\"name\": \"Dana\", \"age\": 49, \"city\": \"Madrid\"}",
+    "check": "json"
+  },
+  {
+    "id": "json_2",
+    "text": "Reply with valid JSON only, no other text, with keys name, age and city: 'Fay is 47 years old and lives in Madrid.'",
+    "tier_label": "tbd",
+    "expected": "{\"name\": \"Fay\", \"age\": 47, \"city\": \"Madrid\"}",
+    "check": "json"
+  },
+  {
+    "id": "json_3",
+    "text": "Reply with valid JSON only, no other text, with keys name, age and city: 'Fay is 37 years old and lives in Tunis.'",
+    "tier_label": "tbd",
+    "expected": "{\"name\": \"Fay\", \"age\": 37, \"city\": \"Tunis\"}",
+    "check": "json"
+  },
+  {
+    "id": "json_4",
+    "text": "Reply with valid JSON only, no other text, with keys name, age and city: 'Carl is 62 years old and lives in Tunis.'",
+    "tier_label": "tbd",
+    "expected": "{\"name\": \"Carl\", \"age\": 62, \"city\": \"Tunis\"}",
+    "check": "json"
+  },
+  {
+    "id": "json_5",
+    "text": "Reply with valid JSON only, no other text, with keys name, age and city: 'Ben is 54 years old and lives in Berlin.'",
+    "tier_label": "tbd",
+    "expected": "{\"name\": \"Ben\", \"age\": 54, \"city\": \"Berlin\"}",
+    "check": "json"
+  },
+  {
+    "id": "json_6",
+    "text": "Reply with valid JSON only, no other text, with keys name, age and city: 'Hana is 74 years old and lives in Berlin.'",
+    "tier_label": "tbd",
+    "expected": "{\"name\": \"Hana\", \"age\": 74, \"city\": \"Berlin\"}",
+    "check": "json"
+  },
+  {
+    "id": "json_7",
+    "text": "Reply with valid JSON only, no other text, with keys name, age and city: 'Hana is 36 years old and lives in Paris.'",
+    "tier_label": "tbd",
+    "expected": "{\"name\": \"Hana\", \"age\": 36, \"city\": \"Paris\"}",
+    "check": "json"
+  },
+  {
+    "id": "letters1_0",
+    "text": "How many times does the letter o appear in 'committee'? Reply with only the number.",
+    "tier_label": "tbd",
+    "expected": "1",
+    "check": "exact"
+  },
+  {
+    "id": "letters1_1",
+    "text": "How many times does the letter e appear in 'strawberry'? Reply with only the number.",
+    "tier_label": "tbd",
+    "expected": "1",
+    "check": "exact"
+  },
+  {
+    "id": "letters1_2",
+    "text": "How many times does the letter e appear in 'occurrence'? Reply with only the number.",
+    "tier_label": "tbd",
+    "expected": "2",
+    "check": "exact"
+  },
+  {
+    "id": "letters1_3",
+    "text": "How many times does the letter n appear in 'assessment'? Reply with only the number.",
+    "tier_label": "tbd",
+    "expected": "1",
+    "check": "exact"
+  },
+  {
+    "id": "letters1_4",
+    "text": "How many times does the letter n appear in 'banana'? Reply with only the number.",
+    "tier_label": "tbd",
+    "expected": "2",
+    "check": "exact"
+  },
+  {
+    "id": "letters1_5",
+    "text": "How many times does the letter o appear in 'committee'? Reply with only the number.",
+    "tier_label": "tbd",
+    "expected": "1",
+    "check": "exact"
+  },
+  {
+    "id": "letters1_6",
+    "text": "How many times does the letter l appear in 'balloon'? Reply with only the number.",
+    "tier_label": "tbd",
+    "expected": "2",
+    "check": "exact"
+  },
+  {
+    "id": "letters1_7",
+    "text": "How many times does the letter u appear in 'occurrence'? Reply with only the number.",
+    "tier_label": "tbd",
+    "expected": "1",
+    "check": "exact"
+  },
+  {
+    "id": "letters2_0",
+    "text": "How many times does the letter u appear in 'occurrence assessment'? Reply with only the number.",
+    "tier_label": "tbd",
+    "expected": "1",
+    "check": "exact"
+  },
+  {
+    "id": "letters2_1",
+    "text": "How many times does the letter c appear in 'assessment committee'? Reply with only the number.",
+    "tier_label": "tbd",
+    "expected": "1",
+    "check": "exact"
+  },
+  {
+    "id": "letters2_2",
+    "text": "How many times does the letter e appear in 'parallel assessment'? Reply with only the number.",
+    "tier_label": "tbd",
+    "expected": "3",
+    "check": "exact"
+  },
+  {
+    "id": "letters2_3",
+    "text": "How many times does the letter p appear in 'banana parallel'? Reply with only the number.",
+    "tier_label": "tbd",
+    "expected": "1",
+    "check": "exact"
+  },
+  {
+    "id": "letters2_4",
+    "text": "How many times does the letter m appear in 'balloon assessment'? Reply with only the number.",
+    "tier_label": "tbd",
+    "expected": "1",
+    "check": "exact"
+  },
+  {
+    "id": "letters2_5",
+    "text": "How many times does the letter a appear in 'strawberry occurrence'? Reply with only the number.",
+    "tier_label": "tbd",
+    "expected": "1",
+    "check": "exact"
+  },
+  {
+    "id": "letters2_6",
+    "text": "How many times does the letter e appear in 'assessment occurrence'? Reply with only the number.",
+    "tier_label": "tbd",
+    "expected": "4",
+    "check": "exact"
+  },
+  {
+    "id": "letters2_7",
+    "text": "How many times does the letter n appear in 'balloon committee'? Reply with only the number.",
+    "tier_label": "tbd",
+    "expected": "1",
+    "check": "exact"
+  },
+  {
+    "id": "date_0",
+    "text": "What date is 18 days after January 31? Reply with only the month and day, like 'June 3'.",
+    "tier_label": "tbd",
+    "expected": "february 18",
+    "check": "exact"
+  },
+  {
+    "id": "date_1",
+    "text": "What date is 13 days after May 28? Reply with only the month and day, like 'June 3'.",
+    "tier_label": "tbd",
+    "expected": "june 10",
+    "check": "exact"
+  },
+  {
+    "id": "date_2",
+    "text": "What date is 30 days after May 7? Reply with only the month and day, like 'June 3'.",
+    "tier_label": "tbd",
+    "expected": "june 6",
+    "check": "exact"
+  },
+  {
+    "id": "date_3",
+    "text": "What date is 60 days after July 20? Reply with only the month and day, like 'June 3'.",
+    "tier_label": "tbd",
+    "expected": "september 18",
+    "check": "exact"
+  },
+  {
+    "id": "date_4",
+    "text": "What date is 10 days after September 12? Reply with only the month and day, like 'June 3'.",
+    "tier_label": "tbd",
+    "expected": "september 22",
+    "check": "exact"
+  },
+  {
+    "id": "date_5",
+    "text": "What date is 33 days after March 27? Reply with only the month and day, like 'June 3'.",
+    "tier_label": "tbd",
+    "expected": "april 29",
+    "check": "exact"
+  },
+  {
+    "id": "date_6",
+    "text": "What date is 40 days after July 25? Reply with only the month and day, like 'June 3'.",
+    "tier_label": "tbd",
+    "expected": "september 3",
+    "check": "exact"
+  },
+  {
+    "id": "date_7",
+    "text": "What date is 13 days after May 23? Reply with only the month and day, like 'June 3'.",
+    "tier_label": "tbd",
+    "expected": "june 5",
+    "check": "exact"
+  },
+  {
+    "id": "date_8",
+    "text": "What date is 60 days after August 9? Reply with only the month and day, like 'June 3'.",
+    "tier_label": "tbd",
+    "expected": "october 8",
+    "check": "exact"
+  },
+  {
+    "id": "date_9",
+    "text": "What date is 22 days after October 9? Reply with only the month and day, like 'June 3'.",
+    "tier_label": "tbd",
+    "expected": "october 31",
+    "check": "exact"
+  },
+  {
+    "id": "date_10",
+    "text": "What date is 27 days after August 1? Reply with only the month and day, like 'June 3'.",
+    "tier_label": "tbd",
+    "expected": "august 28",
+    "check": "exact"
+  },
+  {
+    "id": "date_11",
+    "text": "What date is 19 days after July 14? Reply with only the month and day, like 'June 3'.",
+    "tier_label": "tbd",
+    "expected": "august 2",
+    "check": "exact"
+  },
+  {
+    "id": "discount_0",
+    "text": "An item costs $60. It gets 10% off, then an extra 5% off the discounted price, then 5% tax is added. What is the final price? Reply with only the number rounded to 2 decimals.",
+    "tier_label": "tbd",
+    "expected": "53.87",
+    "check": "exact"
+  },
+  {
+    "id": "discount_1",
+    "text": "An item costs $60. It gets 20% off, then an extra 5% off the discounted price, then 8% tax is added. What is the final price? Reply with only the number rounded to 2 decimals.",
+    "tier_label": "tbd",
+    "expected": "49.25",
+    "check": "exact"
+  },
+  {
+    "id": "discount_2",
+    "text": "An item costs $150. It gets 20% off, then an extra 10% off the discounted price, then 8% tax is added. What is the final price? Reply with only the number rounded to 2 decimals.",
+    "tier_label": "tbd",
+    "expected": "116.64",
+    "check": "exact"
+  },
+  {
+    "id": "discount_3",
+    "text": "An item costs $40. It gets 20% off, then an extra 10% off the discounted price, then 10% tax is added. What is the final price? Reply with only the number rounded to 2 decimals.",
+    "tier_label": "tbd",
+    "expected": "31.68",
+    "check": "exact"
+  },
+  {
+    "id": "discount_4",
+    "text": "An item costs $80. It gets 25% off, then an extra 5% off the discounted price, then 10% tax is added. What is the final price? Reply with only the number rounded to 2 decimals.",
+    "tier_label": "tbd",
+    "expected": "62.70",
+    "check": "exact"
+  },
+  {
+    "id": "discount_5",
+    "text": "An item costs $150. It gets 10% off, then an extra 10% off the discounted price, then 10% tax is added. What is the final price? Reply with only the number rounded to 2 decimals.",
+    "tier_label": "tbd",
+    "expected": "133.65",
+    "check": "exact"
+  },
+  {
+    "id": "discount_6",
+    "text": "An item costs $150. It gets 30% off, then an extra 10% off the discounted price, then 8% tax is added. What is the final price? Reply with only the number rounded to 2 decimals.",
+    "tier_label": "tbd",
+    "expected": "102.06",
+    "check": "exact"
+  },
+  {
+    "id": "discount_7",
+    "text": "An item costs $120. It gets 10% off, then an extra 10% off the discounted price, then 10% tax is added. What is the final price? Reply with only the number rounded to 2 decimals.",
+    "tier_label": "tbd",
+    "expected": "106.92",
+    "check": "exact"
+  },
+  {
+    "id": "discount_8",
+    "text": "An item costs $120. It gets 10% off, then an extra 5% off the discounted price, then 5% tax is added. What is the final price? Reply with only the number rounded to 2 decimals.",
+    "tier_label": "tbd",
+    "expected": "107.73",
+    "check": "exact"
+  },
+  {
+    "id": "discount_9",
+    "text": "An item costs $60. It gets 30% off, then an extra 5% off the discounted price, then 5% tax is added. What is the final price? Reply with only the number rounded to 2 decimals.",
+    "tier_label": "tbd",
+    "expected": "41.90",
+    "check": "exact"
+  },
+  {
+    "id": "discount_10",
+    "text": "An item costs $80. It gets 10% off, then an extra 5% off the discounted price, then 5% tax is added. What is the final price? Reply with only the number rounded to 2 decimals.",
+    "tier_label": "tbd",
+    "expected": "71.82",
+    "check": "exact"
+  },
+  {
+    "id": "discount_11",
+    "text": "An item costs $150. It gets 20% off, then an extra 15% off the discounted price, then 5% tax is added. What is the final price? Reply with only the number rounded to 2 decimals.",
+    "tier_label": "tbd",
+    "expected": "107.10",
+    "check": "exact"
+  },
+  {
+    "id": "invoice3_0",
+    "text": "Invoice:\nItem 1 - $142.60\nItem 2 - $93.99\nItem 3 - $15.20\n\nWhat is the total of only the items priced over $50? Reply with just the number rounded to 2 decimals.",
+    "tier_label": "tbd",
+    "expected": "236.59",
+    "check": "exact"
+  },
+  {
+    "id": "invoice3_1",
+    "text": "Invoice:\nItem 1 - $35.15\nItem 2 - $59.55\nItem 3 - $96.99\n\nWhat is the total of only the items priced over $50? Reply with just the number rounded to 2 decimals.",
+    "tier_label": "tbd",
+    "expected": "156.54",
+    "check": "exact"
+  },
+  {
+    "id": "invoice3_2",
+    "text": "Invoice:\nItem 1 - $143.54\nItem 2 - $92.33\nItem 3 - $73.75\n\nWhat is the total of only the items priced over $50? Reply with just the number rounded to 2 decimals.",
+    "tier_label": "tbd",
+    "expected": "309.62",
+    "check": "exact"
+  },
+  {
+    "id": "invoice3_3",
+    "text": "Invoice:\nItem 1 - $21.73\nItem 2 - $75.77\nItem 3 - $146.78\n\nWhat is the total of only the items priced over $50? Reply with just the number rounded to 2 decimals.",
+    "tier_label": "tbd",
+    "expected": "222.55",
+    "check": "exact"
+  },
+  {
+    "id": "invoice3_4",
+    "text": "Invoice:\nItem 1 - $74.66\nItem 2 - $50.22\nItem 3 - $25.90\n\nWhat is the total of only the items priced over $50? Reply with just the number rounded to 2 decimals.",
+    "tier_label": "tbd",
+    "expected": "124.88",
+    "check": "exact"
+  },
+  {
+    "id": "invoice3_5",
+    "text": "Invoice:\nItem 1 - $113.70\nItem 2 - $112.35\nItem 3 - $74.40\n\nWhat is the total of only the items priced over $50? Reply with just the number rounded to 2 decimals.",
+    "tier_label": "tbd",
+    "expected": "300.45",
+    "check": "exact"
+  },
+  {
+    "id": "invoice3_6",
+    "text": "Invoice:\nItem 1 - $105.35\nItem 2 - $79.87\nItem 3 - $34.76\n\nWhat is the total of only the items priced over $50? Reply with just the number rounded to 2 decimals.",
+    "tier_label": "tbd",
+    "expected": "185.22",
+    "check": "exact"
+  },
+  {
+    "id": "invoice3_7",
+    "text": "Invoice:\nItem 1 - $143.04\nItem 2 - $57.45\nItem 3 - $105.06\n\nWhat is the total of only the items priced over $50? Reply with just the number rounded to 2 decimals.",
+    "tier_label": "tbd",
+    "expected": "305.55",
+    "check": "exact"
+  },
+  {
+    "id": "invoice10_0",
+    "text": "Invoice:\nItem 1 - $137.55\nItem 2 - $114.93\nItem 3 - $48.22\nItem 4 - $98.22\nItem 5 - $18.20\nItem 6 - $127.59\nItem 7 - $80.17\nItem 8 - $136.70\nItem 9 - $56.58\nItem 10 - $37.30\n\nWhat is the total of only the items priced over $50? Reply with just the number rounded to 2 decimals.",
+    "tier_label": "tbd",
+    "expected": "751.74",
+    "check": "exact"
+  },
+  {
+    "id": "invoice10_1",
+    "text": "Invoice:\nItem 1 - $83.53\nItem 2 - $77.89\nItem 3 - $97.28\nItem 4 - $93.92\nItem 5 - $119.32\nItem 6 - $114.96\nItem 7 - $33.30\nItem 8 - $39.71\nItem 9 - $63.10\nItem 10 - $121.48\n\nWhat is the total of only the items priced over $50? Reply with just the number rounded to 2 decimals.",
+    "tier_label": "tbd",
+    "expected": "771.48",
+    "check": "exact"
+  },
+  {
+    "id": "invoice10_2",
+    "text": "Invoice:\nItem 1 - $33.99\nItem 2 - $76.45\nItem 3 - $111.00\nItem 4 - $148.49\nItem 5 - $119.57\nItem 6 - $73.47\nItem 7 - $33.08\nItem 8 - $92.75\nItem 9 - $54.92\nItem 10 - $122.24\n\nWhat is the total of only the items priced over $50? Reply with just the number rounded to 2 decimals.",
+    "tier_label": "tbd",
+    "expected": "798.89",
+    "check": "exact"
+  },
+  {
+    "id": "invoice10_3",
+    "text": "Invoice:\nItem 1 - $109.85\nItem 2 - $55.68\nItem 3 - $146.30\nItem 4 - $16.68\nItem 5 - $19.81\nItem 6 - $73.16\nItem 7 - $53.97\nItem 8 - $74.98\nItem 9 - $147.86\nItem 10 - $93.49\n\nWhat is the total of only the items priced over $50? Reply with just the number rounded to 2 decimals.",
+    "tier_label": "tbd",
+    "expected": "755.29",
+    "check": "exact"
+  },
+  {
+    "id": "invoice10_4",
+    "text": "Invoice:\nItem 1 - $5.28\nItem 2 - $136.83\nItem 3 - $54.88\nItem 4 - $98.25\nItem 5 - $126.02\nItem 6 - $22.39\nItem 7 - $61.34\nItem 8 - $108.17\nItem 9 - $33.90\nItem 10 - $133.91\n\nWhat is the total of only the items priced over $50? Reply with just the number rounded to 2 decimals.",
+    "tier_label": "tbd",
+    "expected": "719.40",
+    "check": "exact"
+  },
+  {
+    "id": "invoice10_5",
+    "text": "Invoice:\nItem 1 - $67.92\nItem 2 - $97.20\nItem 3 - $17.58\nItem 4 - $142.19\nItem 5 - $109.66\nItem 6 - $72.16\nItem 7 - $112.79\nItem 8 - $17.31\nItem 9 - $28.03\nItem 10 - $149.00\n\nWhat is the total of only the items priced over $50? Reply with just the number rounded to 2 decimals.",
+    "tier_label": "tbd",
+    "expected": "750.92",
+    "check": "exact"
+  },
+  {
+    "id": "invoice10_6",
+    "text": "Invoice:\nItem 1 - $8.99\nItem 2 - $90.67\nItem 3 - $72.48\nItem 4 - $100.10\nItem 5 - $93.68\nItem 6 - $91.40\nItem 7 - $73.78\nItem 8 - $140.93\nItem 9 - $27.61\nItem 10 - $84.50\n\nWhat is the total of only the items priced over $50? Reply with just the number rounded to 2 decimals.",
+    "tier_label": "tbd",
+    "expected": "747.54",
+    "check": "exact"
+  },
+  {
+    "id": "invoice10_7",
+    "text": "Invoice:\nItem 1 - $8.10\nItem 2 - $120.91\nItem 3 - $110.32\nItem 4 - $19.90\nItem 5 - $113.68\nItem 6 - $25.19\nItem 7 - $148.05\nItem 8 - $33.25\nItem 9 - $131.72\nItem 10 - $9.06\n\nWhat is the total of only the items priced over $50? Reply with just the number rounded to 2 decimals.",
+    "tier_label": "tbd",
+    "expected": "624.68",
+    "check": "exact"
+  },
+  {
+    "id": "invoice10_8",
+    "text": "Invoice:\nItem 1 - $35.85\nItem 2 - $77.67\nItem 3 - $115.73\nItem 4 - $52.27\nItem 5 - $83.93\nItem 6 - $125.96\nItem 7 - $13.83\nItem 8 - $112.29\nItem 9 - $135.17\nItem 10 - $101.06\n\nWhat is the total of only the items priced over $50? Reply with just the number rounded to 2 decimals.",
+    "tier_label": "tbd",
+    "expected": "804.08",
+    "check": "exact"
+  },
+  {
+    "id": "invoice10_9",
+    "text": "Invoice:\nItem 1 - $123.18\nItem 2 - $79.93\nItem 3 - $124.94\nItem 4 - $132.33\nItem 5 - $23.96\nItem 6 - $27.02\nItem 7 - $79.03\nItem 8 - $131.56\nItem 9 - $117.59\nItem 10 - $93.24\n\nWhat is the total of only the items priced over $50? Reply with just the number rounded to 2 decimals.",
+    "tier_label": "tbd",
+    "expected": "881.80",
+    "check": "exact"
+  },
+  {
+    "id": "order3_0",
+    "text": "Carl is older than Ben. Ben is older than Gus. Who is the third-oldest? Reply with only the name.",
+    "tier_label": "tbd",
+    "expected": "gus",
+    "check": "exact"
+  },
+  {
+    "id": "order3_1",
+    "text": "Ben is older than Eli. Eli is older than Anna. Who is the third-oldest? Reply with only the name.",
+    "tier_label": "tbd",
+    "expected": "anna",
+    "check": "exact"
+  },
+  {
+    "id": "order3_2",
+    "text": "Gus is older than Anna. Hana is older than Gus. Who is the oldest? Reply with only the name.",
+    "tier_label": "tbd",
+    "expected": "hana",
+    "check": "exact"
+  },
+  {
+    "id": "order3_3",
+    "text": "Carl is older than Anna. Dana is older than Carl. Who is the third-oldest? Reply with only the name.",
+    "tier_label": "tbd",
+    "expected": "anna",
+    "check": "exact"
+  },
+  {
+    "id": "order3_4",
+    "text": "Eli is older than Anna. Hana is older than Eli. Who is the second-oldest? Reply with only the name.",
+    "tier_label": "tbd",
+    "expected": "eli",
+    "check": "exact"
+  },
+  {
+    "id": "order3_5",
+    "text": "Eli is older than Gus. Fay is older than Eli. Who is the third-oldest? Reply with only the name.",
+    "tier_label": "tbd",
+    "expected": "gus",
+    "check": "exact"
+  },
+  {
+    "id": "order3_6",
+    "text": "Eli is older than Dana. Dana is older than Hana. Who is the third-oldest? Reply with only the name.",
+    "tier_label": "tbd",
+    "expected": "hana",
+    "check": "exact"
+  },
+  {
+    "id": "order3_7",
+    "text": "Dana is older than Fay. Fay is older than Eli. Who is the third-oldest? Reply with only the name.",
+    "tier_label": "tbd",
+    "expected": "eli",
+    "check": "exact"
+  },
+  {
+    "id": "order6_0",
+    "text": "Hana is older than Ben. Dana is older than Gus. Gus is older than Hana. Fay is older than Anna. Ben is older than Fay. Who is the sixth-oldest? Reply with only the name.",
+    "tier_label": "tbd",
+    "expected": "anna",
+    "check": "exact"
+  },
+  {
+    "id": "order6_1",
+    "text": "Ben is older than Carl. Carl is older than Fay. Dana is older than Hana. Anna is older than Ben. Hana is older than Anna. Who is the second-oldest? Reply with only the name.",
+    "tier_label": "tbd",
+    "expected": "hana",
+    "check": "exact"
+  },
+  {
+    "id": "order6_2",
+    "text": "Fay is older than Anna. Anna is older than Dana. Hana is older than Ben. Dana is older than Gus. Ben is older than Fay. Who is the fifth-oldest? Reply with only the name.",
+    "tier_label": "tbd",
+    "expected": "dana",
+    "check": "exact"
+  },
+  {
+    "id": "order6_3",
+    "text": "Ben is older than Hana. Carl is older than Dana. Hana is older than Eli. Dana is older than Ben. Gus is older than Carl. Who is the fifth-oldest? Reply with only the name.",
+    "tier_label": "tbd",
+    "expected": "hana",
+    "check": "exact"
+  },
+  {
+    "id": "order6_4",
+    "text": "Dana is older than Fay. Hana is older than Dana. Anna is older than Gus. Fay is older than Anna. Gus is older than Ben. Who is the oldest? Reply with only the name.",
+    "tier_label": "tbd",
+    "expected": "hana",
+    "check": "exact"
+  },
+  {
+    "id": "order6_5",
+    "text": "Carl is older than Eli. Eli is older than Fay. Dana is older than Anna. Gus is older than Carl. Anna is older than Gus. Who is the sixth-oldest? Reply with only the name.",
+    "tier_label": "tbd",
+    "expected": "fay",
+    "check": "exact"
+  },
+  {
+    "id": "order6_6",
+    "text": "Gus is older than Carl. Hana is older than Gus. Dana is older than Ben. Eli is older than Dana. Ben is older than Hana. Who is the sixth-oldest? Reply with only the name.",
+    "tier_label": "tbd",
+    "expected": "carl",
+    "check": "exact"
+  },
+  {
+    "id": "order6_7",
+    "text": "Dana is older than Anna. Hana is older than Fay. Fay is older than Eli. Anna is older than Hana. Carl is older than Dana. Who is the oldest? Reply with only the name.",
+    "tier_label": "tbd",
+    "expected": "carl",
+    "check": "exact"
+  },
+  {
+    "id": "order6_8",
+    "text": "Anna is older than Dana. Eli is older than Gus. Gus is older than Anna. Dana is older than Fay. Fay is older than Ben. Who is the oldest? Reply with only the name.",
+    "tier_label": "tbd",
+    "expected": "eli",
+    "check": "exact"
+  },
+  {
+    "id": "order6_9",
+    "text": "Dana is older than Anna. Gus is older than Hana. Carl is older than Gus. Ben is older than Carl. Anna is older than Ben. Who is the fifth-oldest? Reply with only the name.",
+    "tier_label": "tbd",
+    "expected": "gus",
+    "check": "exact"
+  }
+]

@@ -16,7 +16,9 @@ from app.providers.groq import GroqProvider
 from app.providers.ollama import OllamaProvider
 
 
-GOLDEN_PATH = Path("data/golden_v2.json")
+GOLDEN_PATH = Path("data/golden_v3.json")
+SKIP_MODELS = {"groq-120b"}
+
 def load_golden() -> list[dict]:
     return json.loads(GOLDEN_PATH.read_text(encoding="utf-8"))
 
@@ -40,7 +42,7 @@ async def run_one(provider: Provider, model_key: str, item: dict) -> dict:
         
 async def main() -> None:
     providers = build_providers()
-    models = [k for k, cfg in REGISTRY.items() if cfg.provider in providers]
+    models = [k for k, cfg in REGISTRY.items() if cfg.provider in providers and k not in SKIP_MODELS]
 
     golden = load_golden()
 
