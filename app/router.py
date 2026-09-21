@@ -7,6 +7,8 @@ from pydantic import BaseModel, Field
 from app.models.registry import REGISTRY
 from app.providers.base import Provider, Response
 
+from datetime import datetime, timezone
+
 TIER_TO_MODEL = {
     "simple": "ollama-local",
     "moderate": "groq-20b",
@@ -50,10 +52,39 @@ class CompletionResponse(BaseModel):
     latency_ms: int
     routing_reason: str
 
+class BudgetTracker:
+    """Tracks paid spend per UTC day. In-memory v1: resets on restart."""
 
+    def __init__(self, daily_limit_usd: float):
+        self.daily_limit_usd = daily_limit_usd
+        self._day = self._today()
+        self._spent = 0.0
+
+    @staticmethod
+    def _today():
+        return datetime.now(timezone.utc).date()
+
+    def _roll_day(self) -> None:
+        today = self._today()
+        if today != self._day:
+            self._day, self._spent = today, 0.0
+
+    @property
+    def spent(self) -> float:
+        self._roll_day()
+        return self._spent
+
+    @property
+    def exhausted(self) -> bool:
+        return self.spent >= self.daily_limit_usd
+
+    def record(self, cost_usd: float) -> None:
+        self._roll_day()
+        self._spent += cost_usd
 class Router:
-    def __init__(self, providers: dict[str, Provider]):
+    def __init__(self, providers: dict[str, Provider], budget: BudgetTracker):
         self.providers = providers
+        self.budget = budget
 
     async def _send(self, model_key: str, prompt: str) -> Response:
         config = REGISTRY[model_key]
@@ -61,22 +92,29 @@ class Router:
 
     async def complete(self, prompt: str) -> CompletionResponse:
         tier, reason = choose_tier(prompt)
+
+        if tier != "simple" and self.budget.exhausted:
+            reason = f"daily budget cap reached, downgraded to free tier (was: {reason})"
+            tier = "simple"
+
         model_key = TIER_TO_MODEL[tier]
 
         try:
             response = await self._send(model_key, prompt)
         except Exception as exc:
-            if model_key == FALLBACK_MODEL:
-                raise
+            if model_key == FALLBACK_MODEL or self.budget.exhausted:
+                raise          # no paid fallback once the budget is spent
             reason += f" | fallback: {model_key} failed ({type(exc).__name__})"
             model_key = FALLBACK_MODEL
             response = await self._send(model_key, prompt)
+
+        self.budget.record(response.cost_usd)
 
         return CompletionResponse(
             text=response.text,
             model=model_key,
             tier=tier,
-            cost_usd=response.cost_usd,
+            cost_usd=round(response.cost_usd, 8),
             latency_ms=response.latency_ms,
             routing_reason=reason,
         )

@@ -9,9 +9,11 @@ class Settings(BaseSettings):
     """Runtime settings for the API."""
 
     app_name: str = "llm-cost-autopilot"
-    version:str = "0.3.0"
+    version:str = "0.4.0"
     app_env: str = "development"
     log_level: str = "INFO"
+    daily_budget_usd: float = 0.05
+    rate_limit: str = "10/minute"
     
     # Provider Credentials Keys
     groq_api_key: str = "Groq API Key"
