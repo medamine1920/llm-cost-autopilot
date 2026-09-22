@@ -1,0 +1,34 @@
+# Models, list prices and routing. Edit this file to swap models — no code changes.
+pricing_verified: 2026-09-20   # source: provider pricing pages
+
+models:
+  ollama-local:
+    provider: ollama
+    model_id: llama3.2:3b
+    cost_per_1m_input: 0.0
+    cost_per_1m_output: 0.0
+    avg_latency_ms: 6500
+    quality_tier: low
+
+  groq-20b:
+    provider: groq
+    model_id: openai/gpt-oss-20b
+    cost_per_1m_input: 0.075
+    cost_per_1m_output: 0.30
+    avg_latency_ms: 600
+    quality_tier: medium
+
+  groq-120b:
+    provider: groq
+    model_id: openai/gpt-oss-120b
+    cost_per_1m_input: 0.15
+    cost_per_1m_output: 0.60
+    avg_latency_ms: 600
+    quality_tier: high
+
+routing:
+  tiers:
+    simple: ollama-local
+    moderate: groq-20b
+  fallback: groq-20b       # used when the tier's model fails
+  escalation: groq-120b    # reserved for the Phase 3 verification loop

@@ -1,26 +1,23 @@
 """Routing: decide which tier a prompt needs, then call that model."""
 
 import re
+from datetime import datetime, timezone
 
 from pydantic import BaseModel, Field
 
-from app.models.registry import REGISTRY
+from app.models.registry import REGISTRY, ROUTING
 from app.providers.base import Provider, Response
-
-from datetime import datetime, timezone
-
-TIER_TO_MODEL = {
-    "simple": "ollama-local",
-    "moderate": "groq-20b",
-}
-FALLBACK_MODEL = "groq-20b"
 
 CALC_WORDS = ("total", "after", "days", "percent", "%", "discount", "tax",
               "change", "cost", "price", "rounded", "sum", "how much")
 
 
 def choose_tier(prompt: str) -> tuple[str, str]:
-    """Rule-based v1 brain. Returns (tier, reason). Replaced by a classifier in Phase 2."""
+    """Rule-based brain (v1). Returns (tier, reason).
+
+    Phase 2 evaluated a trained classifier against these rules; the rules matched
+    it on accuracy and made fewer quality-risk errors, so they were retained.
+    """
     text = prompt.lower()
     numbers = len(re.findall(r"\d+", prompt))
     comparisons = len(re.findall(r"\b(older|younger|before|after|taller|shorter) than\b", text))
@@ -52,6 +49,7 @@ class CompletionResponse(BaseModel):
     latency_ms: int
     routing_reason: str
 
+
 class BudgetTracker:
     """Tracks paid spend per UTC day. In-memory v1: resets on restart."""
 
@@ -81,6 +79,8 @@ class BudgetTracker:
     def record(self, cost_usd: float) -> None:
         self._roll_day()
         self._spent += cost_usd
+
+
 class Router:
     def __init__(self, providers: dict[str, Provider], budget: BudgetTracker):
         self.providers = providers
@@ -94,18 +94,18 @@ class Router:
         tier, reason = choose_tier(prompt)
 
         if tier != "simple" and self.budget.exhausted:
-            reason = f"daily budget cap reached, downgraded to free tier (was: {reason})"
+            reason = f"daily budget cap reached, downgraded to simple tier (was: {reason})"
             tier = "simple"
 
-        model_key = TIER_TO_MODEL[tier]
+        model_key = ROUTING.tiers[tier]
 
         try:
             response = await self._send(model_key, prompt)
         except Exception as exc:
-            if model_key == FALLBACK_MODEL or self.budget.exhausted:
+            if model_key == ROUTING.fallback or self.budget.exhausted:
                 raise          # no paid fallback once the budget is spent
             reason += f" | fallback: {model_key} failed ({type(exc).__name__})"
-            model_key = FALLBACK_MODEL
+            model_key = ROUTING.fallback
             response = await self._send(model_key, prompt)
 
         self.budget.record(response.cost_usd)
