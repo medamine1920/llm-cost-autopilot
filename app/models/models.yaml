@@ -1,5 +1,5 @@
-# Models, list prices and routing. Edit this file to swap models — no code changes.
-pricing_verified: 2026-09-20   # source: provider pricing pages
+
+pricing_verified: 2026-09-20
 
 models:
   ollama-local:
@@ -30,5 +30,5 @@ routing:
   tiers:
     simple: ollama-local
     moderate: groq-20b
-  fallback: groq-20b       # used when the tier's model fails
-  escalation: groq-120b    # reserved for the Phase 3 verification loop
+  fallback: groq-20b   
+  escalation: groq-120b   
