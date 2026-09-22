@@ -19,6 +19,7 @@ class Settings(BaseSettings):
     groq_api_key: str = "Groq API Key"
     gemini_api_key: str = "Gemini API Key"
     ollama_base_url: str = "http://localhost:11434"
+    #openrouter_api_key: str = "Openrouter API Key"
     
 
     model_config = SettingsConfigDict(

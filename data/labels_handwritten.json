@@ -1,0 +1,18 @@
+{
+  "hw_classify_shipping": "moderate",
+  "hw_classify_refund": "simple",
+  "hw_classify_question": "simple",
+  "hw_review_mixed": "simple",
+  "hw_review_positive": "simple",
+  "hw_extract_order": "simple",
+  "hw_extract_phone": "moderate",
+  "hw_order_total": "moderate",
+  "hw_roas": "moderate",
+  "hw_cpa_gap": "moderate",
+  "hw_promo_end": "moderate",
+  "hw_inventory_weeks": "moderate",
+  "hw_policy_opened": "simple",
+  "hw_policy_defective": "moderate",
+  "hw_coverage": "moderate",
+  "hw_json_order": "simple"
+}

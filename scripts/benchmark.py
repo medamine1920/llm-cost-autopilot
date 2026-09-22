@@ -2,7 +2,7 @@
 
 Run from project root:  python -m scripts.benchmark
 """
-
+import argparse
 import asyncio
 import json
 from datetime import datetime
@@ -15,8 +15,10 @@ from app.providers.base import Provider
 from app.providers.groq import GroqProvider
 from app.providers.ollama import OllamaProvider
 
+parser = argparse.ArgumentParser()
+parser.add_argument("--golden", default="data/golden_v3.json")
+GOLDEN_PATH = Path(parser.parse_args().golden)
 
-GOLDEN_PATH = Path("data/golden_v3.json")
 SKIP_MODELS = {"groq-120b"}
 
 def load_golden() -> list[dict]:

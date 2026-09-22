@@ -1,0 +1,114 @@
+[
+  {
+    "id": "hw_classify_shipping",
+    "tier_label": "moderate",
+    "check": "exact",
+    "expected": "shipping",
+    "text": "Classify this customer message as shipping, refund, question, or other: 'My order #5521 shows delivered but nothing is at my door.' Reply with one word."
+  },
+  {
+    "id": "hw_classify_refund",
+    "tier_label": "simple",
+    "check": "exact",
+    "expected": "refund",
+    "text": "Classify this customer message as shipping, refund, question, or other: 'The mulch glue arrived but the nozzle is cracked, I want my money back.' Reply with one word."
+  },
+  {
+    "id": "hw_classify_question",
+    "tier_label": "simple",
+    "check": "exact",
+    "expected": "question",
+    "text": "Classify this customer message as shipping, refund, question, or other: 'Does the rock glue work on wet gravel?' Reply with one word."
+  },
+  {
+    "id": "hw_review_mixed",
+    "tier_label": "simple",
+    "check": "exact",
+    "expected": "mixed",
+    "text": "Is this review positive, negative, or mixed? 'Held my gravel in place through two storms, but the bottle leaked in the box.' One word."
+  },
+  {
+    "id": "hw_review_positive",
+    "tier_label": "simple",
+    "check": "exact",
+    "expected": "positive",
+    "text": "Is this review positive, negative, or mixed? 'Absolutely love it, my patio looks brand new.' One word."
+  },
+  {
+    "id": "hw_extract_order",
+    "tier_label": "simple",
+    "check": "exact",
+    "expected": "88412",
+    "text": "Extract the order number from: 'Hi, it's Karim. Order 88412 still hasn't shipped and it's been a week.' Reply with only the number."
+  },
+  {
+    "id": "hw_extract_phone",
+    "tier_label": "moderate",
+    "check": "exact",
+    "expected": "555-0142",
+    "text": "Extract the phone number from: 'Call me back at 555-0142 after 5pm, not at the office line.' Reply with only the phone number."
+  },
+  {
+    "id": "hw_order_total",
+    "tier_label": "moderate",
+    "check": "exact",
+    "expected": "112.43",
+    "text": "Order summary:\n2 x Rock Glue 1L @ $24.99\n1 x Applicator gun @ $18.50\n3 x Mulch Glue 500ml @ $12.00\nShipping: $7.95\n\nWhat is the order total including shipping? Reply with only the number."
+  },
+  {
+    "id": "hw_roas",
+    "tier_label": "moderate",
+    "check": "contains",
+    "expected": "3.5",
+    "text": "An ad campaign spent $1,250 and generated $4,375 in revenue. What is the ROAS? Reply with only the number."
+  },
+  {
+    "id": "hw_cpa_gap",
+    "tier_label": "moderate",
+    "check": "exact",
+    "expected": "-5",
+    "text": "A campaign spent $2,400 and got 96 purchases. The target CPA is $30. What is the actual CPA minus the target CPA? Reply with only the number, no currency sign."
+  },
+  {
+    "id": "hw_promo_end",
+    "tier_label": "moderate",
+    "check": "exact",
+    "expected": "december 3",
+    "text": "A promo starts on November 24 and runs for 10 days, counting the start day as day 1. What is its last day? Reply with only the month and day, like 'June 3'."
+  },
+  {
+    "id": "hw_inventory_weeks",
+    "tier_label": "moderate",
+    "check": "exact",
+    "expected": "6",
+    "text": "A warehouse has 340 bottles. Each week it sells 45 and receives 20. After how many full weeks does stock first drop below 200? Reply with only the number."
+  },
+  {
+    "id": "hw_policy_opened",
+    "tier_label": "simple",
+    "check": "exact",
+    "expected": "no",
+    "text": "Refund policy: refunds are allowed within 30 days of delivery, only if the item is unopened. A customer received the item 21 days ago and has opened it. Is a refund allowed? Reply yes or no."
+  },
+  {
+    "id": "hw_policy_defective",
+    "tier_label": "moderate",
+    "check": "exact",
+    "expected": "yes",
+    "text": "Refund policy: refunds are allowed within 30 days of delivery if the item is unopened, or within 60 days if the item is defective. A customer received a defective item 45 days ago and has opened it. Is a refund allowed? Reply yes or no."
+  },
+  {
+    "id": "hw_coverage",
+    "tier_label": "moderate",
+    "check": "exact",
+    "expected": "7",
+    "text": "One bottle of rock glue covers 2 square meters. How many whole bottles are needed for a patio that is 4.5 m by 3 m? Reply with only the number."
+  },
+  {
+    "id": "hw_json_order",
+    "tier_label": "simple",
+    "check": "json",
+    "expected": "{\"product\": \"Mulch Glue\", \"quantity\": 3}",
+    "text": "Reply with valid JSON only, no other text, with keys product and quantity: 'I need three bottles of Mulch Glue for my backyard.'"
+  }
+]
