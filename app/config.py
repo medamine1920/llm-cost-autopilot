@@ -22,7 +22,7 @@ class Settings(BaseSettings):
     ollama_base_url: str = "http://localhost:11434"
     #openrouter_api_key: str = "Openrouter API Key"
     
-    db_path: str = "/data/autopilot.db"
+    db_path: str = "./data/autopilot.db"
     
     model_config = SettingsConfigDict(
         env_file=".env",
