@@ -1,0 +1,442 @@
+{
+  "reformat": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "extract": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "fact": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "classify": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "sentiment": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "reasoning": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "multistep": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "math": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "logic": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "long_context_extraction": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "instruction_precision": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "six_runner_logic": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "code_trace": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "date_chain": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "remainder_puzzle": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "letter_count": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "negation": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "add_0": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "add_1": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "add_2": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "add_3": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "add_4": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "add_5": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "add_6": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "add_7": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "upper_0": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "upper_1": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "upper_2": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "upper_3": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "upper_4": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "upper_5": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "upper_6": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "upper_7": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "extract_0": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "extract_1": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "extract_2": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "extract_3": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "extract_4": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "extract_5": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "extract_6": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "extract_7": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "json_0": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "json_1": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "json_2": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "json_3": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "json_4": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "json_5": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "json_6": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "json_7": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "letters1_0": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "letters1_1": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "letters1_2": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "letters1_3": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "letters1_4": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "letters1_5": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "letters1_6": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "letters1_7": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "letters2_0": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "letters2_1": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "letters2_2": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "letters2_3": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "letters2_4": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "letters2_5": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "letters2_6": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "letters2_7": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "date_0": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "date_1": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "date_2": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "date_3": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "date_4": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "date_5": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "date_6": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "date_7": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "date_8": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "date_9": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "date_10": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "date_11": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "order3_0": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "order3_1": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "order3_2": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "order3_3": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "order3_4": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "order3_5": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "order3_6": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "order3_7": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "order6_0": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "order6_1": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "order6_2": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "order6_3": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "order6_4": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "order6_5": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "order6_6": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "order6_7": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "order6_8": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "order6_9": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "hw_classify_shipping": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "hw_classify_refund": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "hw_classify_question": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "hw_review_mixed": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "hw_review_positive": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "hw_extract_order": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "hw_order_total": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "hw_roas": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "hw_cpa_gap": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "hw_promo_end": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "hw_inventory_weeks": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "hw_policy_opened": {
+    "ok": true,
+    "reason": "judge: correct"
+  },
+  "hw_policy_defective": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "hw_coverage": {
+    "ok": false,
+    "reason": "judge: incorrect"
+  },
+  "hw_json_order": {
+    "ok": true,
+    "reason": "judge: correct"
+  }
+}
