@@ -6,6 +6,12 @@ services:
     env_file: .env
     environment:
       OLLAMA_BASE_URL: http://host.docker.internal:11434
+      DB_PATH: /data/autopilot.db
     ports:
       - "8000:8000"
     restart: unless-stopped
+    volumes:
+      - autopilot_data:/data
+
+volumes:
+  autopilot_data:

@@ -32,7 +32,9 @@ COPY --from=builder /opt/venv /opt/venv
 COPY app ./app
 
 # Fix for blocker 2: don't run as root
-RUN useradd --create-home --shell /bin/bash appuser
+RUN useradd --create-home --shell /bin/bash appuser \
+    && mkdir -p /data \
+    && chown appuser:appuser /data
 USER appuser
 
 EXPOSE 8000
