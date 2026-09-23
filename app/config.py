@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     """Runtime settings for the API."""
 
     app_name: str = "llm-cost-autopilot"
-    version:str = "0.5.0"
+    version:str = "0.6.0"
     app_env: str = "development"
     log_level: str = "INFO"
     daily_budget_usd: float = 0.05
@@ -22,7 +22,8 @@ class Settings(BaseSettings):
     ollama_base_url: str = "http://localhost:11434"
     #openrouter_api_key: str = "Openrouter API Key"
     
-
+    db_path: str = "/data/autopilot.db"
+    
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",

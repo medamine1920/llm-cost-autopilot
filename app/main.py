@@ -1,18 +1,20 @@
 """FastAPI application entrypoint."""
 
 from fastapi import FastAPI, HTTPException, Request
+
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 from slowapi.util import get_remote_address
-
+from app.store import RequestStore
 from app.config import get_settings
 from app.providers.groq import GroqProvider
 from app.providers.ollama import OllamaProvider
 from app.router import BudgetTracker, CompletionRequest, CompletionResponse, Router
 
+from fastapi.responses import HTMLResponse
+from app.dashboard import render
 
 def create_app() -> FastAPI:
-    """Create and configure the FastAPI application."""
     settings = get_settings()
     app = FastAPI(title=settings.app_name, version=settings.version)
 
@@ -20,14 +22,25 @@ def create_app() -> FastAPI:
     app.state.limiter = limiter
     app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
-    budget = BudgetTracker(daily_limit_usd=settings.daily_budget_usd)
+    store = RequestStore(settings.db_path)
+    budget = BudgetTracker(daily_limit_usd=settings.daily_budget_usd, store=store)
     router = Router(
         providers={
             "groq": GroqProvider(api_key=settings.groq_api_key),
             "ollama": OllamaProvider(base_url=settings.ollama_base_url),
         },
         budget=budget,
+        store=store,
     )
+    
+    @app.get("/v1/stats")
+    def stats(days: int = 7) -> dict:
+        return store.stats(days=days)
+    
+    @app.get("/dashboard", response_class=HTMLResponse)
+    def dashboard(days: int = 7) -> str:
+        return render(store.stats(days=days), settings.app_name, settings.version)
+    
 
     @app.get("/health")
     def health() -> dict[str, str]:

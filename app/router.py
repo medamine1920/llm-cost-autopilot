@@ -51,40 +51,25 @@ class CompletionResponse(BaseModel):
 
 
 class BudgetTracker:
-    """Tracks paid spend per UTC day. In-memory v1: resets on restart."""
+    """Daily spend cap, backed by the request log so it survives restarts."""
 
-    def __init__(self, daily_limit_usd: float):
+    def __init__(self, daily_limit_usd: float, store):
         self.daily_limit_usd = daily_limit_usd
-        self._day = self._today()
-        self._spent = 0.0
-
-    @staticmethod
-    def _today():
-        return datetime.now(timezone.utc).date()
-
-    def _roll_day(self) -> None:
-        today = self._today()
-        if today != self._day:
-            self._day, self._spent = today, 0.0
+        self.store = store
 
     @property
     def spent(self) -> float:
-        self._roll_day()
-        return self._spent
+        return self.store.spent_today()
 
     @property
     def exhausted(self) -> bool:
         return self.spent >= self.daily_limit_usd
 
-    def record(self, cost_usd: float) -> None:
-        self._roll_day()
-        self._spent += cost_usd
-
-
 class Router:
-    def __init__(self, providers: dict[str, Provider], budget: BudgetTracker):
+    def __init__(self, providers: dict[str, Provider], budget: BudgetTracker, store):
         self.providers = providers
         self.budget = budget
+        self.store = store
 
     async def _send(self, model_key: str, prompt: str) -> Response:
         config = REGISTRY[model_key]
@@ -98,17 +83,35 @@ class Router:
             tier = "simple"
 
         model_key = ROUTING.tiers[tier]
+        escalated = False
 
         try:
             response = await self._send(model_key, prompt)
         except Exception as exc:
             if model_key == ROUTING.fallback or self.budget.exhausted:
-                raise          # no paid fallback once the budget is spent
+                raise
             reason += f" | fallback: {model_key} failed ({type(exc).__name__})"
             model_key = ROUTING.fallback
+            escalated = True
             response = await self._send(model_key, prompt)
 
-        self.budget.record(response.cost_usd)
+        baseline_model = REGISTRY[ROUTING.tiers["moderate"]]
+        baseline_cost = baseline_model.cost_for(
+            response.input_tokens, response.output_tokens
+        )
+
+        self.store.record(
+            prompt=prompt,
+            tier=tier,
+            model=model_key,
+            routing_reason=reason,
+            input_tokens=response.input_tokens,
+            output_tokens=response.output_tokens,
+            cost_usd=response.cost_usd,
+            baseline_cost_usd=baseline_cost,
+            latency_ms=response.latency_ms,
+            escalated=escalated,
+        )
 
         return CompletionResponse(
             text=response.text,
