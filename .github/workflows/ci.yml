@@ -73,5 +73,10 @@ jobs:
             cd ~/apps/llm-cost-autopilot
             docker compose pull
             docker compose up -d
-            sleep 3
-            curl -f localhost:8000/health
+            for i in $(seq 1 10); do
+              curl -fs localhost:8000/health && exit 0
+              sleep 3
+            done
+            echo "health check failed"
+            docker compose logs api --tail 30
+            exit 1
