@@ -1,5 +1,6 @@
 """Routing: decide which tier a prompt needs, then call that model."""
 
+import asyncio
 import re
 from datetime import datetime, timezone
 
@@ -8,15 +9,22 @@ from pydantic import BaseModel, Field
 from app.models.registry import REGISTRY, ROUTING
 from app.providers.base import Provider, Response
 
+# Signals that the cheap model gets wrong (from the 140-prompt benchmark).
 CALC_WORDS = ("total", "after", "days", "percent", "%", "discount", "tax",
               "change", "cost", "price", "rounded", "sum", "how much")
+
+# Signals of a long answer. Not about capability: on CPU-only hardware the local
+# model runs at ~5 tokens/s, so a 400-token answer takes over a minute.
+LONG_OUTPUT_WORDS = ("write", "generate", "create", "code", "function", "script",
+                     "explain", "describe", "list", "draft", "essay", "story",
+                     "compare", "outline", "steps", "how do i", "how to")
 
 
 def choose_tier(prompt: str) -> tuple[str, str]:
     """Rule-based brain (v1). Returns (tier, reason).
 
-    Phase 2 evaluated a trained classifier against these rules; the rules matched
-    it on accuracy and made fewer quality-risk errors, so they were retained.
+    Phase 2 evaluated a trained classifier against these rules; it matched them on
+    accuracy and made more quality-risk errors, so the rules were retained.
     """
     text = prompt.lower()
     numbers = len(re.findall(r"\d+", prompt))
@@ -32,6 +40,8 @@ def choose_tier(prompt: str) -> tuple[str, str]:
         return "moderate", f"{comparisons}-step comparison chain"
     if any(w in text for w in ("sentiment", "review", "mixed")):
         return "moderate", "nuanced sentiment judgment"
+    if any(w in text for w in LONG_OUTPUT_WORDS):
+        return "moderate", "long-form output expected: cloud model is ~10x faster"
     if len(prompt) > 400:
         return "moderate", "long prompt"
     return "simple", "no complexity signals detected"
@@ -59,17 +69,22 @@ class BudgetTracker:
 
     @property
     def spent(self) -> float:
-        return self.store.spent_today()
+        return self.store.spent_today() or 0.0
 
     @property
     def exhausted(self) -> bool:
         return self.spent >= self.daily_limit_usd
 
+
 class Router:
-    def __init__(self, providers: dict[str, Provider], budget: BudgetTracker, store):
+    """Chooses a model per request, with fallback, a latency ceiling and logging."""
+
+    def __init__(self, providers: dict[str, Provider], budget: BudgetTracker, store,
+                 local_timeout_s: float = 12.0):
         self.providers = providers
         self.budget = budget
         self.store = store
+        self.local_timeout_s = local_timeout_s
 
     async def _send(self, model_key: str, prompt: str) -> Response:
         config = REGISTRY[model_key]
@@ -86,11 +101,20 @@ class Router:
         escalated = False
 
         try:
-            response = await self._send(model_key, prompt)
-        except Exception as exc:
+            if tier == "simple":
+                # Latency ceiling: a free answer is only worth waiting so long for.
+                response = await asyncio.wait_for(
+                    self._send(model_key, prompt), timeout=self.local_timeout_s
+                )
+            else:
+                response = await self._send(model_key, prompt)
+        except (asyncio.TimeoutError, Exception) as exc:
             if model_key == ROUTING.fallback or self.budget.exhausted:
                 raise
-            reason += f" | fallback: {model_key} failed ({type(exc).__name__})"
+            if isinstance(exc, asyncio.TimeoutError):
+                reason += f" | exceeded {self.local_timeout_s:.0f}s latency ceiling, switched to cloud"
+            else:
+                reason += f" | fallback: {model_key} failed ({type(exc).__name__})"
             model_key = ROUTING.fallback
             escalated = True
             response = await self._send(model_key, prompt)
